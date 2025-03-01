@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Settings</title>
+    <link rel="stylesheet" href="styles/settings.css">
+</head>
+<body>
+    <div class="settings-container">
+        <div class="setting-header">
+            <h2>Widget Settings</h2>
+            <button class="close-btn" onclick="window.close()">×</button>
+        </div>
+        <div class="settings-content">
+            <div class="settings-group">
+                <h3>Portfolio</h3>
+                <div class="setting-item">
+                    <label for="btcAmount">Your Bitcoin Amount</label>
+                    <input type="number" id="btcAmount" step="0.00000001" min="0" placeholder="Enter BTC amount">
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="showPortfolio">
+                    <label for="showPortfolio">Show Portfolio Value</label>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <h3>Widget Behavior</h3>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="alwaysOnTop">
+                    <label for="alwaysOnTop">Keep Always on Top</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="autoHide">
+                    <label for="autoHide">Auto-hide When Inactive</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="startWithWindows">
+                    <label for="startWithWindows">Start with Windows</label>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="lockPosition">
+                    <label for="lockPosition">Lock Widget Position</label>
+                </div>
+            </div>
+
+            <div class="settings-group">
+                <h3>Appearance</h3>
+                <div class="setting-item">
+                    <label>Widget Opacity</label>
+                    <div class="slider-container">
+                        <input type="range" id="opacity" min="30" max="100" value="100">
+                        <span class="slider-value" id="opacityValue">100%</span>
+                    </div>
+                </div>
+                <div class="checkbox-wrapper">
+                    <input type="checkbox" id="darkMode">
+                    <label for="darkMode">Dark Background</label>
+                </div>
+            </div>
+        </div>
+        <div class="settings-footer">
+            <button class="save-btn" onclick="saveSettings()">Save Changes</button>
+        </div>
+    </div>
+    <script src="settings.js"></script>
+    <script>
+        const { ipcRenderer } = require('electron');
+        
+        ipcRenderer.on('load-settings', (event, savedSettings) => {
+            if (savedSettings) {
+                document.getElementById('btcAmount').value = savedSettings.btcAmount || 0;
+                document.getElementById('showPortfolio').checked = savedSettings.showPortfolio || false;
+                document.getElementById('alwaysOnTop').checked = savedSettings.alwaysOnTop || false;
+                document.getElementById('autoHide').checked = savedSettings.autoHide || false;
+                document.getElementById('startWithWindows').checked = savedSettings.startWithWindows || false;
+                document.getElementById('lockPosition').checked = savedSettings.lockPosition || false;
+                document.getElementById('opacity').value = savedSettings.opacity || 100;
+                document.getElementById('opacityValue').textContent = `${savedSettings.opacity || 100}%`;
+                document.getElementById('darkMode').checked = savedSettings.darkMode || false;
+            }
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const opacitySlider = document.getElementById('opacity');
+            const opacityValue = document.getElementById('opacityValue');
+            
+            opacitySlider.addEventListener('input', (e) => {
+                opacityValue.textContent = `${e.target.value}%`;
+            });
+
+            const header = document.querySelector('.setting-header');
+            header.style.webkitAppRegion = 'drag';
+            
+            const closeBtn = document.querySelector('.close-btn');
+            closeBtn.style.webkitAppRegion = 'no-drag';
+        });
+
+        function saveSettings() {
+            const settings = {
+                btcAmount: parseFloat(document.getElementById('btcAmount').value) || 0,
+                showPortfolio: document.getElementById('showPortfolio').checked,
+                alwaysOnTop: document.getElementById('alwaysOnTop').checked,
+                autoHide: document.getElementById('autoHide').checked,
+                startWithWindows: document.getElementById('startWithWindows').checked,
+                lockPosition: document.getElementById('lockPosition').checked,
+                opacity: parseInt(document.getElementById('opacity').value),
+                darkMode: document.getElementById('darkMode').checked
+            };
+
+            window.ipcRenderer.send('settings-changed', settings);
+            window.close();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+html, body {
+    overflow: hidden;
+    width: max-content;
+    height: max-content;
+    background: transparent;
+    margin: 0;
+    padding: 0;
+}
+body {
+    -webkit-app-region: drag;
+    font-family: Arial, sans-serif;
+    user-select: none;
+    -webkit-user-select: none;
+}
+#price {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: white;
+    font-size: 20px;
+    text-shadow: 0 0 10px rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.5);
+    padding: 8px 16px;
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+    pointer-events: auto;
+    white-space: nowrap;
+    min-width: fit-content;
+    cursor: context-menu;
+    -webkit-app-region: drag;
+}
+.price-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    -webkit-app-region: no-drag;
+}
+.bitcoin-icon {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    color: #F7931A;
+    margin-right: 4px;
+}
+.main-price {
+    font-weight: bold;
+    letter-spacing: -0.5px;
+    -webkit-app-region: no-drag;
+}
+.price-change {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 4px 8px;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.2);
+    -webkit-app-region: no-drag;
+}
+.portfolio-value {
+    font-size: 14px;
+    color: rgba(255,255,255,0.9);
+    background: rgba(0,0,0,0.2);
+    padding: 4px 8px;
+    border-radius: 4px;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+    -webkit-app-region: no-drag;
+}

@@ -1,0 +1,45 @@
+{
+  "name": "bitcoin",
+  "version": "1.0.0",
+  "description": "Bitcoin Price Widget",
+  "author": {
+    "name": "MiladSoft",
+    "email": "miladsoft@yahoo.com",
+    "url": "https://github.com/miladsoft"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/miladsoft/bitcoin-price-widget",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/miladsoft/bitcoin-price-widget.git"
+  },
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "keywords": [
+    "bitcoin",
+    "crypto",
+    "widget",
+    "price-tracker",
+    "electron",
+    "desktop"
+  ],
+  "dependencies": {
+    "ws": "^8.18.1"
+  },
+  "devDependencies": {
+    "electron": "^34.3.0",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.bitcoin.pricewidget",
+    "productName": "Bitcoin Price Widget",
+    "asar": true,
+    "win": {
+      "target": "portable",
+      "icon": "icon.png"
+    }
+  }
+}
